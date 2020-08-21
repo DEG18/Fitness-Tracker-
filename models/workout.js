@@ -6,6 +6,7 @@ const WorkoutSchema = new Schema({
     day: {
         type: Date,
         default: () => new Date()
+        // default: Data.now, 
     },
     exercises: [
         {
@@ -18,21 +19,20 @@ const WorkoutSchema = new Schema({
                 required: true
             },
             distance: {
-                type: Number,
-                required: true
+                type: Number
             },
             duration: {
                 type: Number,
                 required: true
             },
             weight: {
-                type: Number,
+                type: Number
             },
             sets: {
-                type: Number,
+                type: Number
             },
             reps: {
-                type: Number,
+                type: Number
             }
         }
     ]
@@ -44,7 +44,12 @@ const WorkoutSchema = new Schema({
     }
 );
 
-WorkoutSchema.virtual("totalDuration").get(() => {
+// WorkoutSchema.virtual("totalWeight").get(function () {
+//   // adding the total weight of the exercises together
+//   return this.weight * this.reps * this.sets;
+// });
+
+WorkoutSchema.virtual("totalDuration").get(function () {
     return this.exercises.reduce((total, exercise) => {
         return total + exercise.duration
     }, 0 ) 
